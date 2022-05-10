@@ -20,32 +20,32 @@ const usuariosGet = async (req = request, res = response) => {
 
 const usuariosPut = async (req, res) => {
   const { id } = req.params;
-  const { _id, contrasena, google, correo, ...resto } = req.body;
+  const { _id, usuario, contrasena, correo, ...resto } = req.body;
 
   if (contrasena) {
     const salt = bcryptjs.genSaltSync();
     resto.contrasena = bcryptjs.hashSync(contrasena, salt);
   }
 
-  const usuario = await Usuario.findByIdAndUpdate(id, resto);
+  const user = await Usuario.findByIdAndUpdate(id, resto);
 
-  res.json(usuario);
+  res.json(user);
 };
 
 const usuariosPost = async (req, res) => {
-  const { nombre, correo, contrasena } = req.body;
-  const usuario = new Usuario({ nombre, correo, contrasena });
+  const { nombres, apellidos, correo, usuario, contrasena } = req.body;
+  const user = new Usuario({ nombres, apellidos, correo, usuario, contrasena });
 
   //Encriptar la constraseña
   //salto para encriptar cuantas vueltas, por defecto son 10
   const salt = bcryptjs.genSaltSync();
-  usuario.contrasena = bcryptjs.hashSync(contrasena, salt);
+  user.contrasena = bcryptjs.hashSync(contrasena, salt);
 
   //Guardar en BD
-  await usuario.save();
+  await user.save();
 
   res.json({
-    usuario,
+    user,
   });
 };
 
