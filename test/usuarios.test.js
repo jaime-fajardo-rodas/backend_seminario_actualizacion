@@ -88,7 +88,8 @@ describe('POST /usuarios/', () => {
             .set('Accept', 'application/json')
             .send({
                 nombres: 'admin3',
-                apellidos: 'apellidos3'
+                apellidos: 'apellidos3',
+                contrasena: '1234567'
             })
             .expect('Content-Type', /json/)
             .expect(200);
