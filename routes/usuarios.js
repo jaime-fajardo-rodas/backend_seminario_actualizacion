@@ -29,7 +29,8 @@ router.put("/:id",[
 
 router.post("/",[
   validarJWT,
-  check('nombre', 'El nombre es obligatorio').not().isEmpty(),
+  check('nombres', 'nombres es obligatorio').not().isEmpty(),
+  check('apellidos', 'apellidos es obligatorio').not().isEmpty(),
   check('contrasena', 'La contraseña es obligatoria y más de 6 letras').isLength({min:6}),
   check('correo', 'El correo no es válido').isEmail(),
   check('correo').custom(emailExiste),
