@@ -26,6 +26,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }} 
-          MONGODB_CNN: ${{ secrets.MONGODB_CNN }}
-          SECRETORPRIVATEKEY: ${{ secrets.SECRETORPRIVATEKEY }}
+          MONGODB_CNN: ${{ github.MONGODB_CNN }}
+          SECRETORPRIVATEKEY: ${{ github.SECRETORPRIVATEKEY }}
 
