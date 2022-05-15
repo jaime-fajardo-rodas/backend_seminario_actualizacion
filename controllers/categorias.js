@@ -70,8 +70,9 @@ const categoriasDelete = async(req, res) => {
 
 module.exports = {
   categoriasGet,
+  categoriasGetById,
   categoriasPut,
   categoriasPost,
   categoriasDelete,
-  categoriasGetById
+ 
 };

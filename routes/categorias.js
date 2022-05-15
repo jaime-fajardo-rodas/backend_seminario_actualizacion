@@ -6,6 +6,7 @@ const {validarCampos,validarJWT} = require('../middlewares');
 
 const {
   categoriasGet,
+  categoriasGetById,
   categoriasPut,
   categoriasPost,
   categoriasDelete,
@@ -18,6 +19,13 @@ const router = Router();
 router.get("/",[
   validarJWT,
 ], categoriasGet);
+
+router.get("/:id",[
+  validarJWT,
+  check('id', 'No es un ID válido').isMongoId(),
+  check('id').custom( existeCategoriaPorId ),
+  validarCampos
+], categoriasGetById );
 
 router.put("/:id",[
   validarJWT,
@@ -36,7 +44,7 @@ router.post("/",[
 router.delete("/:id",[
   validarJWT,
   check('id', 'No es un ID válido').isMongoId(),
-  check('id').custom( existeUsuarioPorId ),
+  check('id').custom( existeCategoriaPorId ),
   validarCampos
 ], categoriasDelete);
 
