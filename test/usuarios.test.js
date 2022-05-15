@@ -106,6 +106,7 @@ describe('POST /usuarios/', () => {
             .send({
                 nombres: 'admin3',
                 apellidos: 'apellidos3',
+                contrasenaAnterior: '123456',
                 contrasena: '1234567'
             })
             .expect('Content-Type', /json/)
