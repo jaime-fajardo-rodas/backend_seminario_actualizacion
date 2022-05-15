@@ -18,6 +18,16 @@ const categoriasGet = async (req = request, res = response) => {
   });
 };
 
+const categoriasGetById = async (req = request, res = response) => {
+  
+  const { id } = req.params;
+  const categoria = await Categoria.findById(id);
+
+  res.json({
+    categoria,
+  });
+};
+
 const categoriasPut = async (req, res) => {
   const { id } = req.params;
   const { _id, nombres, tipo_categoria, ...resto } = req.body;
@@ -63,4 +73,5 @@ module.exports = {
   categoriasPut,
   categoriasPost,
   categoriasDelete,
+  categoriasGetById
 };
