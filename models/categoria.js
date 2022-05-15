@@ -20,7 +20,7 @@ const Categoriaschema = Schema({
 
 CategoriaSchema.methods.toJSON = function(){
     const {__v,nombres, tipo_categoria} = this.toObject();
-    categoria.uid = _id;
+    categoria.cid = _id;
     return categoria;
 }
 
