@@ -36,7 +36,7 @@ router.put("/:id",[
 ], usuariosPut);
 
 router.post("/",[
-  validarJWT,
+  // validarJWT,
   check('nombres', 'nombres es obligatorio').not().isEmpty(),
   check('apellidos', 'apellidos es obligatorio').not().isEmpty(),
   check('contrasena', 'La contraseña es obligatoria y más de 6 letras').isLength({min:6}),
