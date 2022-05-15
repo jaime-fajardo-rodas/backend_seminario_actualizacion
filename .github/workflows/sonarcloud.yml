@@ -18,12 +18,15 @@ jobs:
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
       - name: Install dependencies
-        run: npm install jest
+        run: npm install
       - name: Test and coverage
+        env:
+          MONGODB_CNN: ${{ secrets.MONGODB_CNN }}
+          SECRETORPRIVATEKEY: ${{ secrets.SECRETORPRIVATEKEY }}
         run: npm run test
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }} 
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}    
 

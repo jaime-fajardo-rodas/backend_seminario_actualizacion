@@ -1,0 +1,14 @@
+{
+    "collectCoverage": true,
+    "coveragePathIgnorePatterns": [
+        
+        ".cirleci",
+        "assets",
+        "node_modules",
+        "database",
+        "helpers",
+        "middlewares",
+        "models"
+    ]
+    
+}

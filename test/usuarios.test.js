@@ -36,6 +36,23 @@ describe('POST /usuarios/', () => {
 })
 
 describe('POST /usuarios/', () => {
+    test('GetById Usuario', async () => {
+
+        const response = await request(server.app)
+            .get(`/api/usuarios/${uidUsuarioTemp}`)
+            .set('x-token', `${tokenObtenido}`)
+            .set('Accept', 'application/json')
+            .expect('Content-Type', /json/)
+            .expect(200);
+
+        let { usuario } = response.body;
+        expect(usuario).toEqual(
+            expect.objectContaining({ apellidos: 'apellidos2', uid: uidUsuarioTemp }),
+        )
+    })
+})
+
+describe('POST /usuarios/', () => {
     test('Get all usuarios', async () => {
 
         const response = await request(server.app)
@@ -69,6 +86,7 @@ describe('POST /usuarios/', () => {
             .send({
                 nombres: 'admin3',
                 apellidos: 'apellidos3',
+                contrasenaAnterior: '123456',
                 contrasena: '1234567'
             })
             .expect('Content-Type', /json/)
