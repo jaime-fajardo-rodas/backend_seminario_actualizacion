@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --coverage=true --forceExit",
+    "test": "jest --config jest.config.json --no-cache --forceExit",
     "start": "node app"
   },
   "keywords": [],
