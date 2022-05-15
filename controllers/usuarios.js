@@ -30,11 +30,24 @@ const usuariosGetById = async (req = request, res = response) => {
 
 const usuariosPut = async (req, res) => {
   const { id } = req.params;
-  const { _id, contrasena, correo, ...resto } = req.body;
+  const usuarioBD = await Usuario.findById(id);
 
-  if (contrasena) {
-    const salt = bcryptjs.genSaltSync();
-    resto.contrasena = bcryptjs.hashSync(contrasena, salt);
+  const { _id, contrasenaAnterior, contrasena, correo, ...resto } = req.body;
+
+  /*Validación contraseña actual para cambio por una nueva*/
+  if(contrasenaAnterior){
+    //verficar la contrasena
+    const validContrasena = bcryptjs.compareSync(contrasenaAnterior,usuarioBD.contrasena);
+    if(!validContrasena){
+        return res.status(400).json({
+            msg: 'Contraseña anterior no es correcta'
+        });
+    }
+
+    if (contrasena) {
+      const salt = bcryptjs.genSaltSync();
+      resto.contrasena = bcryptjs.hashSync(contrasena, salt);
+    }
   }
 
   await Usuario.findByIdAndUpdate(id, resto);
