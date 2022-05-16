@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --config jest.config.json --no-cache --forceExit",
     "start": "node app"
   },
   "keywords": [],
@@ -22,6 +22,7 @@
     "jest": "^28.0.3",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.10",
+    "supertest": "^6.2.3",
     "uuid": "^8.3.2",
     "ve": "^0.1.3"
   }
