@@ -13,7 +13,7 @@ const CuentaSchema = Schema({
     tipoCuenta: {
         type: String,
         required: [true, 'El tipo de cuenta es obligatorio'],
-        
+        enum: ['CUENTA_CORRIENTE','BILLETERA','AHORRO', 'INVERSIONES']        
     },
     usuario: {
         type: Schema.Types.ObjectId,

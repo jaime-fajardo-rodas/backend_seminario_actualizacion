@@ -25,7 +25,6 @@ const cuentasGetById = async (req = request, res = response) => {
   res.json({
     cuenta,
   });
-
 };
 
 const cuentasPut = async (req, res) => {
@@ -41,13 +40,13 @@ const cuentasPut = async (req, res) => {
 };
 
 const cuentasPost = async (req, res) => {
-  const { cuentaBanco, saldo, tipoCuenta, usuario } = req.body;
+  const { usuario, ...body } = req.body;
 
   const data = {
-    cuentaBanco: cuentaBanco,
-    saldo: saldo,
-    tipoCuenta: tipoCuenta,
-    usuario: usuario._id,
+    cuentaBanco: body.cuentaBanco,
+    saldo: body.saldo,
+    tipoCuenta: body.tipoCuenta,
+    usuario: req.usuario._id,
   };
   const cuenta = new Cuenta(data);
 
