@@ -70,7 +70,6 @@ const categoriasDelete = async(req, res) => {
   }
 
   res.json({categoria});
-
 }
 
 module.exports = {

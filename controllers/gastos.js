@@ -35,12 +35,14 @@ const gastosPut = async (req, res) => {
 const gastosPost = async (req, res) => {
     const { cuenta, categoria, ...body } = req.body;
 
+    const parts = body.fecha.split('-');
+    const fecha = new Date(parts[0], parts[1] - 1, parts[2]); 
     const data = {
-        fecha: body.fecha,
+        fecha: fecha,
         nombre: body.nombre,
         valor: body.valor,
-        cuenta: cuenta._id,
-        categoria: categoria._id,
+        cuenta: req.cuenta._id,
+        categoria: req.categoria._id,
         estado: body.estado,
     };
 
