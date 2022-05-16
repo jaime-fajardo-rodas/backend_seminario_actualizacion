@@ -1,5 +1,5 @@
 const { response, request } = require("express");
-const Usuario = require("../models/categoria");
+const Categoria = require("../models/categoria");
 const bcryptjs = require("bcryptjs");
 
 const categoriasGet = async (req = request, res = response) => {
@@ -30,9 +30,25 @@ const categoriasGetById = async (req = request, res = response) => {
 
 const categoriasPut = async (req, res) => {
   const { id } = req.params;
-  const { _id, nombres, tipo_categoria, ...resto } = req.body;
+  const usuarioBD = await Categoria.findById(id);
 
+  const { _id, ...resto } = req.body;
 
+  /*Validación contraseña actual para cambio por una nueva*/
+ /* if(contrasenaAnterior){
+    //verficar la contrasena
+    const validContrasena = bcryptjs.compareSync(contrasenaAnterior,usuarioBD.contrasena);
+    if(!validContrasena){
+        return res.status(400).json({
+            msg: 'Contraseña anterior no es correcta'
+        });
+    }
+
+    if (contrasena) {
+      const salt = bcryptjs.genSaltSync();
+      resto.contrasena = bcryptjs.hashSync(contrasena, salt);
+    }
+  }*/
 
   await Categoria.findByIdAndUpdate(id, resto);
   const categoria = await Categoria.findById(id);

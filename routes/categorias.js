@@ -2,7 +2,8 @@ const { Router, request } = require("express");
 const { check } = require("express-validator");
 
 const {validarCampos,validarJWT} = require('../middlewares');
-
+//const { emailExiste, existeUsuarioPorId } = require("../helpers/db-validators");
+const { emailExiste, existeCategoriaPorId } = require("../helpers/db-validators");
 
 const {
   categoriasGet,
@@ -23,14 +24,14 @@ router.get("/",[
 router.get("/:id",[
   validarJWT,
   check('id', 'No es un ID válido').isMongoId(),
-  check('id').custom( existeCategoriaPorId ),
+   //check('id').custom( existeCategoriaPorId ),
   validarCampos
 ], categoriasGetById );
 
 router.put("/:id",[
   validarJWT,
   check('id', 'No es un ID válido').isMongoId(),
-  check('id').custom( existeCategoriaPorId ),
+   //check('id').custom( existeCategoriaPorId ),
   validarCampos
 ], categoriasPut);
 
@@ -44,7 +45,7 @@ router.post("/",[
 router.delete("/:id",[
   validarJWT,
   check('id', 'No es un ID válido').isMongoId(),
-  check('id').custom( existeCategoriaPorId ),
+   //check('id').custom( existeCategoriaPorId ),
   validarCampos
 ], categoriasDelete);
 
