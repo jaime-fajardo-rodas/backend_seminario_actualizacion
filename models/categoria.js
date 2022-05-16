@@ -10,7 +10,15 @@ const CategoriaSchema = Schema({
         type: String,
         required: [true, 'Tipo categoria es obligatorio'],
     },
-   
+    usuario: {
+        type: Schema.Types.ObjectId,
+        ref:'Usuario',
+        required: [true, 'El usuario es obligatoria'],
+    },
+    estado: {
+        type: Boolean,
+        default: true
+    },
 });
 
 CategoriaSchema.methods.toJSON = function(){

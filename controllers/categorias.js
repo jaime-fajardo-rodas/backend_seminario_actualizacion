@@ -1,6 +1,5 @@
 const { response, request } = require("express");
 const Categoria = require("../models/categoria");
-const bcryptjs = require("bcryptjs");
 
 const categoriasGet = async (req = request, res = response) => {
   
@@ -34,22 +33,6 @@ const categoriasPut = async (req, res) => {
 
   const { _id, ...resto } = req.body;
 
-  /*Validación contraseña actual para cambio por una nueva*/
- /* if(contrasenaAnterior){
-    //verficar la contrasena
-    const validContrasena = bcryptjs.compareSync(contrasenaAnterior,usuarioBD.contrasena);
-    if(!validContrasena){
-        return res.status(400).json({
-            msg: 'Contraseña anterior no es correcta'
-        });
-    }
-
-    if (contrasena) {
-      const salt = bcryptjs.genSaltSync();
-      resto.contrasena = bcryptjs.hashSync(contrasena, salt);
-    }
-  }*/
-
   await Categoria.findByIdAndUpdate(id, resto);
   const categoria = await Categoria.findById(id);
 
@@ -57,9 +40,15 @@ const categoriasPut = async (req, res) => {
 };
 
 const categoriasPost = async (req, res) => {
-  const { nombres, tipo_categoria } = req.body;
-  const categoria = new Categoria({ nombres, tipo_categoria });
+  const { usuario, ...body} = req.body;
 
+  const data = {
+    nombres: body.nombre,
+    tipo_categoria: body.tipo_categoria,
+    usuario: usuario._id,
+  };
+
+  const categoria = new Categoria(data);
 
   //Guardar en BD
   await categoria.save();

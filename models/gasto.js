@@ -14,16 +14,14 @@ const GastoSchema = Schema({
         required: [true, 'El valor es obligatorio'],
     },
     cuenta: {
-        type: Number,
+        type: Schema.Types.ObjectId,
+        ref:'Cuenta',
         required: [true, 'La cuenta es obligatoria'],
     },
     categoria: {
-        type: Number,
+        type: Schema.Types.ObjectId,
+        ref:'Categoria',
         required: [true, 'La categoria es obligatoria'],
-    },
-    usuario: {
-        type: Number,
-        required: [true, 'el usuario es obligatoria'],
     },
     estado: {
         type: Boolean,
@@ -32,7 +30,7 @@ const GastoSchema = Schema({
 });
 
 GastoSchema.methods.toJSON = function(){
-    const {__v, fecha, nombre, valor, cuenta, categoria, usuario, estado, _id, ...gasto} = this.toObject();
+    const {_id, ...gasto} = this.toObject();
     gasto.uid = _id;
     return gasto;
 }

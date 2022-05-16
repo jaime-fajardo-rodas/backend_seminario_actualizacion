@@ -24,7 +24,7 @@ const gastosGetById = async (req = request, res = response) => {
 
 const gastosPut = async (req, res) => {
     const { id } = req.params;  
-    const { _id, fecha, nombre, valor, cuenta, categoria, usuario, estado, ...resto } = req.body;
+    const { _id, ...resto } = req.body;
   
     await Gasto.findByIdAndUpdate(id, resto);
     const gasto = await Gasto.findById(id);
@@ -33,8 +33,18 @@ const gastosPut = async (req, res) => {
 };
 
 const gastosPost = async (req, res) => {
-    const { fecha, nombre, valor, cuenta, categoria, usuario, estado } = req.body;
-    const gasto = new Gasto({ fecha, nombre, valor, cuenta, categoria, usuario, estado });
+    const { cuenta, categoria, ...body } = req.body;
+
+    const data = {
+        fecha: body.fecha,
+        nombre: body.nombre,
+        valor: body.valor,
+        cuenta: cuenta._id,
+        categoria: categoria._id,
+        estado: body.estado,
+    };
+
+    const gasto = new Gasto(data);
   
     //Guardar en BD
     await gasto.save();

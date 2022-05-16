@@ -1,6 +1,5 @@
 const { response, request } = require("express");
 const Ingreso = require("../models/ingreso");
-const bcryptjs = require("bcryptjs");
 
 const ingresosGet = async (req = request, res = response) => {
   
@@ -35,24 +34,6 @@ const ingresosPut = async (req, res) => {
 
   const { _id,...resto } = req.body;
 
-  
-  //Validación contraseña actual para cambio por una nueva
-  /*
-  if(contrasenaAnterior){
-    //verficar la contrasena
-    const validContrasena = bcryptjs.compareSync(contrasenaAnterior,usuarioBD.contrasena);
-    if(!validContrasena){
-        return res.status(400).json({
-            msg: 'Contraseña anterior no es correcta'
-        });
-    }
-
-    if (contrasena) {
-      const salt = bcryptjs.genSaltSync();
-      resto.contrasena = bcryptjs.hashSync(contrasena, salt);
-    }
-  } */
-
   await Ingreso.findByIdAndUpdate(id, resto);
   const ingreso = await Ingreso.findById(id);
 
@@ -60,9 +41,17 @@ const ingresosPut = async (req, res) => {
 };
 
 const ingresosPost = async (req, res) => {
-  const { fecha, descripcion, valor, estado,cuentas,categorias} = req.body;
-  const ingreso = new Ingreso({ fecha, descripcion, valor, estado,cuentas,categorias });
+  const { fecha, descripcion, valor, cuenta, categoria, estado} = req.body;
 
+  const data = {
+    fecha: fecha,
+    descripcion: descripcion,
+    valor: valor,
+    cuenta: cuenta._id,
+    categoria: categoria._id,
+    estado: estado,
+};
+  const ingreso = new Ingreso(data);
 
   //Guardar en BD
   await ingreso.save();

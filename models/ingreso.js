@@ -14,20 +14,20 @@ const IngresoSchema = Schema({
         type: Number,
         required: [true, 'El Valor es obligatorio'],
     },
+    cuenta: {
+        type: Schema.Types.ObjectId,
+        ref:'Cuenta',
+        required: [true, 'La cuenta es obligatoria'],
+    },
+    categoria: {
+        type: Schema.Types.ObjectId,
+        ref:'Categoria',
+        required: [true, 'La categoria es obligatoria'],
+    },
     estado: {
         type: Boolean,
         default: true
-    },
-
-    cuentas: {
-        type: String,
-        required: [true, 'La cuenta es obligatoria'],
-    },
-    categorias: {
-        type: String,
-        required: [true, 'La cuenta es obligatoria'],
-    },
-
+    }
 });
 
 
