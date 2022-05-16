@@ -16,8 +16,9 @@ const CuentaSchema = Schema({
         
     },
     usuario: {
-        type: String,
-        required: [true, 'Usuario es obligatoria'],
+        type: Schema.Types.ObjectId,
+        ref:'Usuario',
+        required: [true, 'El usuario es obligatoria'],
     },
     estado: {
         type: Boolean,

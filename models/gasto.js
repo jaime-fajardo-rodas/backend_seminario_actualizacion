@@ -1,18 +1,17 @@
-
 const { Schema, model } = require('mongoose');
 
-const IngresoSchema = Schema({
+const GastoSchema = Schema({
     fecha: {
         type: Date,
-        required: [true, 'Fecha es obligatorio'],
+        required: [true, 'La fecha es obligatorio'],
     },
-    descripcion: {
+    nombre: {
         type: String,
-        required: [true, 'La descripción del ingreso es obligatorio'],
+        required: [true, 'EL nombre es obligatorio'],
     },
     valor: {
         type: Number,
-        required: [true, 'El Valor es obligatorio'],
+        required: [true, 'El valor es obligatorio'],
     },
     cuenta: {
         type: Schema.Types.ObjectId,
@@ -27,14 +26,13 @@ const IngresoSchema = Schema({
     estado: {
         type: Boolean,
         default: true
-    }
+    },
 });
 
+GastoSchema.methods.toJSON = function(){
+    const {_id, ...gasto} = this.toObject();
+    gasto.uid = _id;
+    return gasto;
+}
 
-IngresoSchema.methods.toJSON = function(){
-    const {_id, ...ingreso } = this.toObject();
-    ingreso.uid = _id;
-    return ingreso;
-} 
-
-module.exports = model( 'Ingreso', IngresoSchema );
+module.exports = model( 'Gasto', GastoSchema );
