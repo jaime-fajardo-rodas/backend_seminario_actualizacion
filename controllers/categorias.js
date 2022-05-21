@@ -43,9 +43,9 @@ const categoriasPost = async (req, res) => {
   const { usuario, ...body} = req.body;
 
   const data = {
-    nombres: body.nombre,
+    nombres: body.nombres,
     tipo_categoria: body.tipo_categoria,
-    usuario: usuario._id,
+    usuario: req.usuario._id,
   };
 
   const categoria = new Categoria(data);
@@ -70,7 +70,6 @@ const categoriasDelete = async(req, res) => {
   }
 
   res.json({categoria});
-
 }
 
 module.exports = {
