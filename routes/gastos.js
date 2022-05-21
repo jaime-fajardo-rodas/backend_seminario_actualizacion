@@ -13,8 +13,6 @@ const {
     gastoDelete,
 } = require("../controllers/gastos");
 
-
-
 const router = Router();
 
 router.get("/",[
