@@ -20,7 +20,7 @@ const cuentasGet = async (req = request, res = response) => {
 const cuentasGetById = async (req = request, res = response) => {
   
   const { id } = req.params;
-  const cuenta = await cuenta.findById(id);
+  const cuenta = await Cuenta.findById(id);
 
   res.json({
     cuenta,
