@@ -6,9 +6,9 @@ const IngresoSchema = Schema({
         type: Date,
         required: [true, 'Fecha es obligatorio'],
     },
-    descripcion: {
+    nombre: {
         type: String,
-        required: [true, 'La descripción del ingreso es obligatorio'],
+        required: [true, 'La nombre del ingreso es obligatorio'],
     },
     valor: {
         type: Number,
