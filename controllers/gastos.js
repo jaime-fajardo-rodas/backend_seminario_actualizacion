@@ -60,17 +60,13 @@ const gastosPut = async (req, res) => {
 
 const gastoDelete = async(req, res) => {
     const { id } = req.params;
-    const { borrar_permanente } = req.body;
-  
-    await Gasto.findByIdAndUpdate( id, {estado:false} );
+
     const gasto = await Gasto.findById(id);
   
-    if(borrar_permanente === true){
-      await Gasto.findByIdAndDelete(id);
-    }
+    await Gasto.findByIdAndDelete(id);
   
     res.json({gasto});
-
+    
 }
   
 module.exports = {

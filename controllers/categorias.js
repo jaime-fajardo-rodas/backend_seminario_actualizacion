@@ -17,6 +17,25 @@ const categoriasGet = async (req = request, res = response) => {
   });
 };
 
+const categoriasGetByUser = async (req = request, res = response) => {
+  const { id } = req.params;
+  const { desde = 0, limite = 5 } = req.query;
+  const query = {
+     estado : true,
+     usuario : id
+  };
+
+  const [total, categorias] = await Promise.all([
+    Categoria.countDocuments(query),
+    Categoria.find(query).skip(Number(desde)).limit(Number(limite)),
+  ]);
+
+  res.json({
+    total,
+    categorias,
+  });
+};
+
 const categoriasGetById = async (req = request, res = response) => {
   
   const { id } = req.params;
@@ -78,5 +97,5 @@ module.exports = {
   categoriasPut,
   categoriasPost,
   categoriasDelete,
- 
+  categoriasGetByUser
 };
