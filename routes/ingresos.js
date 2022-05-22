@@ -13,8 +13,6 @@ const {
    ingresosDelete,
 } = require("../controllers/ingresos");
 
-
-
 const router = Router();
 
 router.get("/",[
@@ -39,7 +37,7 @@ router.post("/",[
   check('nombre', 'nombre es obligatorio').not().isEmpty(),
   check('valor', 'valor es obligatorio').not().isEmpty(),
   check('cuenta', 'cuenta es obligatorio').not().isEmpty(),
-  check('categoria', 'cuenta es obligatorio').not().isEmpty(),
+  check('categoria', 'categoria es obligatorio').not().isEmpty(),
   validarCampos
 ] , ingresosPost);
 
