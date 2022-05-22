@@ -3,7 +3,7 @@ const { check } = require("express-validator");
 
 const {validarCampos,validarJWT} = require('../middlewares');
 
-const { existeGastoPorId } = require("../helpers/db-validators");
+const { existeGastoPorId, existeCuentaPorId, existeCategoriaPorId } = require("../helpers/db-validators");
 
 const {
     gastosGetById,
@@ -12,8 +12,6 @@ const {
     gastosPost,
     gastoDelete,
 } = require("../controllers/gastos");
-
-
 
 const router = Router();
 
@@ -36,14 +34,19 @@ router.put("/:id",[
 ], gastosPut);
 
 router.post("/",[
-  // validarJWT,
+  validarJWT,
   check('fecha', 'fecha es obligatorio').not().isEmpty(),
   check('nombre', 'nombre es obligatorio').not().isEmpty(),
   check('valor', 'valor es obligatorio').not().isEmpty(),
+
   check('cuenta', 'cuenta es obligatorio').not().isEmpty(),
+  check('cuenta', 'No es un ID válido').isMongoId(),
+  check('cuenta').custom(existeCuentaPorId),
+
   check('categoria', 'categoria es obligatorio').not().isEmpty(),
-  check('usuario', 'usuario es obligatorio').not().isEmpty(),
-  check('id').custom(existeGastoPorId),
+  check('categoria', 'No es un ID válido').isMongoId(),
+  check('categoria').custom(existeCategoriaPorId),
+  
   validarCampos
 ] , gastosPost);
 

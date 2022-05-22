@@ -17,6 +17,25 @@ const categoriasGet = async (req = request, res = response) => {
   });
 };
 
+const categoriasGetByUser = async (req = request, res = response) => {
+  const { id } = req.params;
+  const { desde = 0, limite = 5 } = req.query;
+  const query = {
+     estado : true,
+     usuario : id
+  };
+
+  const [total, categorias] = await Promise.all([
+    Categoria.countDocuments(query),
+    Categoria.find(query).skip(Number(desde)).limit(Number(limite)),
+  ]);
+
+  res.json({
+    total,
+    categorias,
+  });
+};
+
 const categoriasGetById = async (req = request, res = response) => {
   
   const { id } = req.params;
@@ -43,9 +62,9 @@ const categoriasPost = async (req, res) => {
   const { usuario, ...body} = req.body;
 
   const data = {
-    nombres: body.nombre,
+    nombres: body.nombres,
     tipo_categoria: body.tipo_categoria,
-    usuario: usuario._id,
+    usuario: req.usuario._id,
   };
 
   const categoria = new Categoria(data);
@@ -70,7 +89,6 @@ const categoriasDelete = async(req, res) => {
   }
 
   res.json({categoria});
-
 }
 
 module.exports = {
@@ -79,5 +97,5 @@ module.exports = {
   categoriasPut,
   categoriasPost,
   categoriasDelete,
- 
+  categoriasGetByUser
 };

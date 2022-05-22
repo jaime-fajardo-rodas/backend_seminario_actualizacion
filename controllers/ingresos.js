@@ -1,9 +1,8 @@
 const { response, request } = require("express");
-const Ingreso = require("../models/ingreso");
+const { Ingreso, Categoria, Cuenta } = require("../models");
 
 const ingresosGet = async (req = request, res = response) => {
-  
-    
+      
   const { desde = 0, limite = 5 } = req.query;
   const query = { estado: true };
 
@@ -28,6 +27,32 @@ const ingresosGetById = async (req = request, res = response) => {
   });
 };
 
+const ingresosPost = async (req, res) => {
+  const { ...body } = req.body;
+
+  const parts = body.fecha.split('-');
+  const fecha = new Date(parts[0], parts[1] - 1, parts[2]); 
+  const cuenta = await Cuenta.findById(body.cuenta);
+  const categoria = await Categoria.findById(body.categoria);
+  
+  const data = {
+      fecha: fecha,
+      nombre: body.nombre,
+      valor: body.valor,
+      cuenta: cuenta,
+      categoria: categoria,
+      estado: body.estado,
+  };
+  const ingreso = new Ingreso(data);
+
+  //Guardar en BD
+  await ingreso.save();
+
+  res.json({
+    ingreso,
+  });
+};
+
 const ingresosPut = async (req, res) => {
   const { id } = req.params;
   const ingresoBD = await Ingreso.findById(id);
@@ -40,37 +65,12 @@ const ingresosPut = async (req, res) => {
   res.json({ingreso});
 };
 
-const ingresosPost = async (req, res) => {
-  const { fecha, descripcion, valor, cuenta, categoria, estado} = req.body;
-
-  const data = {
-    fecha: fecha,
-    descripcion: descripcion,
-    valor: valor,
-    cuenta: cuenta._id,
-    categoria: categoria._id,
-    estado: estado,
-};
-  const ingreso = new Ingreso(data);
-
-  //Guardar en BD
-  await ingreso.save();
-
-  res.json({
-    ingreso,
-  });
-};
-
 const ingresosDelete = async(req, res) => {
   const { id } = req.params;
-  const { borrar_permanente } = req.body;
-
-  await Ingreso.findByIdAndUpdate( id, {estado:false} );
+  
   const ingreso = await Ingreso.findById(id);
 
-  if(borrar_permanente === true){
-    await Ingreso.findByIdAndDelete(id);
-  }
+  await Ingreso.findByIdAndDelete(id);
 
   res.json({ingreso});
 

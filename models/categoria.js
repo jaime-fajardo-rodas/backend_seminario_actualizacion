@@ -9,6 +9,7 @@ const CategoriaSchema = Schema({
     tipo_categoria: {
         type: String,
         required: [true, 'Tipo categoria es obligatorio'],
+        enum: ['GASTO','INGRESO']
     },
     usuario: {
         type: Schema.Types.ObjectId,

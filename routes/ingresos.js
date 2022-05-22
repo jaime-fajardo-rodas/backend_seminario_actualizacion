@@ -13,8 +13,6 @@ const {
    ingresosDelete,
 } = require("../controllers/ingresos");
 
-
-
 const router = Router();
 
 router.get("/",[
@@ -36,10 +34,10 @@ router.put("/:id",[
 router.post("/",[
   validarJWT,
   check('fecha', 'Fecha es obligatoria').not().isEmpty(),
-  check('descripcion', 'descripcion es obligatorio').not().isEmpty(),
+  check('nombre', 'nombre es obligatorio').not().isEmpty(),
   check('valor', 'valor es obligatorio').not().isEmpty(),
-  check('cuentas', 'cuenta es obligatorio').not().isEmpty(),
-  check('categorias', 'cuenta es obligatorio').not().isEmpty(),
+  check('cuenta', 'cuenta es obligatorio').not().isEmpty(),
+  check('categoria', 'categoria es obligatorio').not().isEmpty(),
   validarCampos
 ] , ingresosPost);
 
