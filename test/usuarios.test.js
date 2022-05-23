@@ -9,6 +9,26 @@ const server = new Server();
 let tokenObtenido = '';
 let uidUsuarioTemp = '';
 
+describe('POST /auth/login', () => {
+    test('logueo de usuario', async () => {
+
+        const response = await request(server.app)
+            .post('/api/auth/login')
+            .send({
+                correo: 'admin1@gmail.com',
+                contrasena: '123456'
+            })
+            .set('Accept', 'application/json')
+            .expect('Content-Type', /json/)
+            .expect(200);
+
+        let { usuario, token } = response.body;
+        tokenObtenido = token;
+        expect(usuario).toEqual(
+            expect.objectContaining({ nombres: 'admin1', apellidos: 'apellidos1' }),
+        );
+    })
+})
 
 describe('POST /usuarios/', () => {
     test('Crear usuario', async () => {
