@@ -13,6 +13,7 @@ class Server {
       ingresos:   "/api/ingresos",
       cuentas:   "/api/cuentas",
       categorias:   "/api/categorias",
+      principal:   "/api/principal",
     };
 
     //Conectar a base de datos
@@ -49,6 +50,7 @@ class Server {
     this.app.use(this.paths.ingresos, require("../routes/ingresos"));
     this.app.use(this.paths.cuentas, require("../routes/cuentas"));
     this.app.use(this.paths.categorias, require("../routes/categorias"));
+    this.app.use(this.paths.principal, require("../routes/principal"));
   }
 
   listen() {
