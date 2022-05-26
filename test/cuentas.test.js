@@ -8,7 +8,7 @@ require("dotenv").config("./.env")
 const server = new Server();
 let tokenObtenido = '';
 let uidUsuarioTemp = '';
-let cidCategoriaTemp = '';
+let uidCuentaTemp = '';
 
 describe('POST /auth/login', () => {
     test('logueo de usuario', async () => {
@@ -34,66 +34,65 @@ describe('POST /auth/login', () => {
     })
 })
 
-describe('POST /categorias/', () => {
-    test('Crear categorias', async () => {
+describe('POST /cuentas/', () => {
+    test('Crear cuentas', async () => {
 
         const response = await request(server.app)
-            .post('/api/categorias/')
+            .post('/api/cuentas/')
             .set('x-token', `${tokenObtenido}`)
             .set('Accept', 'application/json')
             .send({
-                nombres: 'vacaciones',
-                tipo_categoria: 'GASTO',
-                usuario: uidUsuarioTemp
+                cuentaBanco : "Colpatria",
+                saldo : 1236245,
+                tipoCuenta : "CUENTA_CORRIENTE",
+                usuario : uidUsuarioTemp
             })
             .expect('Content-Type', /json/)
             .expect(200);
 
-        let { categoria } = response.body;
-        cidCategoriaTemp = categoria.cid;
-        expect(categoria).toEqual(
-            expect.objectContaining({ nombres: 'vacaciones', cid: cidCategoriaTemp }),
+        let { cuenta } = response.body;
+        uidCuentaTemp = cuenta.uid;
+        expect(cuenta).toEqual(
+            expect.objectContaining({ cuentaBanco: 'Colpatria', uid: uidCuentaTemp }),
         )
     })
 })
 
 
-describe('GET /categorias/', () => {
-    test('GetById categorias', async () => {
+describe('GET /cuentas/', () => {
+    test('GetById cuentas', async () => {
 
         const response = await request(server.app)
-            .get(`/api/categorias/${cidCategoriaTemp}`)
+            .get(`/api/cuentas/${uidCuentaTemp}`)
             .set('x-token', `${tokenObtenido}`)
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .expect(200);
 
-        let { categoria } = response.body;
-        expect(categoria).toEqual(
-            expect.objectContaining({ tipo_categoria: 'GASTO', cid: cidCategoriaTemp }),
+        let { cuenta } = response.body;
+        expect(cuenta).toEqual(
+            expect.objectContaining({ tipoCuenta: 'CUENTA_CORRIENTE', uid: uidCuentaTemp }),
         )
     })
 })
 
-describe('GET /categorias/', () => {
-    test('Get all categorias', async () => {
+describe('GET /cuentas/', () => {
+    test('Get all cuentas', async () => {
 
         const response = await request(server.app)
-            .get('/api/categorias/')
+            .get('/api/cuentas/')
             .set('x-token', `${tokenObtenido}`)
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .expect(200);
 
-        let { categorias } = response.body;
-        expect(categorias).toEqual(
+        let { cuentas } = response.body;
+        expect(cuentas).toEqual(
             expect.arrayContaining(
                 [
                     expect.objectContaining(
-                        { nombres: 'pareja' },
-                        { nombres: 'creditos' },
-                        { nombres: 'Salario' },
-                        { nombres: 'vacaciones' }
+                        { cuentaBanco: 'Bancolombia' },
+                        { cuentaBanco: 'Colpatria' }
                     )
                 ]
             )
@@ -101,33 +100,34 @@ describe('GET /categorias/', () => {
     })
 })
 
-describe('PUT /categorias/', () => {
-    test('Actualizar categorias', async () => {
+describe('PUT /cuentas/', () => {
+    test('Actualizar cuentas', async () => {
 
         const response = await request(server.app)
-            .put(`/api/categorias/${cidCategoriaTemp}`)
+            .put(`/api/cuentas/${uidCuentaTemp}`)
             .set('x-token', `${tokenObtenido}`)
             .set('Accept', 'application/json')
             .send({
-                nombres: 'comisiones',
-                tipo_categoria: 'INGRESO',
-                usuario: uidUsuarioTemp
+                cuentaBanco : "Davivienda",
+                saldo : 1236245,
+                tipoCuenta : "CUENTA_CORRIENTE",
+                usuario : uidUsuarioTemp
             })
             .expect('Content-Type', /json/)
             .expect(200);
 
-        let { categoria } = response.body;
-        expect(categoria).toEqual(
-            expect.objectContaining({ nombres: 'comisiones', tipo_categoria: 'INGRESO' }),
+        let { cuenta } = response.body;
+        expect(cuenta).toEqual(
+            expect.objectContaining({ cuentaBanco: 'Davivienda', tipoCuenta: 'CUENTA_CORRIENTE' }),
         )
     })
 })
 
-describe('DELETE /categorias/', () => {
-    test('Eliminar categorias', async () => {
+describe('DELETE /cuentas/', () => {
+    test('Eliminar cuentas', async () => {
 
         const response = await request(server.app)
-            .delete(`/api/categorias/${cidCategoriaTemp}`)
+            .delete(`/api/cuentas/${uidCuentaTemp}`)
             .set('x-token', `${tokenObtenido}`)
             .set('Accept', 'application/json')
             .send({
@@ -136,18 +136,18 @@ describe('DELETE /categorias/', () => {
             .expect('Content-Type', /json/)
             .expect(200);
 
-        let { categoria } = response.body;
-        expect(categoria).toEqual(
+        let { cuenta } = response.body;
+        expect(cuenta).toEqual(
             expect.objectContaining({ estado: false }),
         )
     })
 })
 
-describe('DELETE /categorias/', () => {
-    test('Eliminar categorias', async () => {
+describe('DELETE /cuentas/', () => {
+    test('Eliminar cuentas', async () => {
 
         const response = await request(server.app)
-            .delete(`/api/categorias/${cidCategoriaTemp}`)
+            .delete(`/api/cuentas/${uidCuentaTemp}`)
             .set('x-token', `${tokenObtenido}`)
             .set('Accept', 'application/json')
             .send({
@@ -156,8 +156,8 @@ describe('DELETE /categorias/', () => {
             .expect('Content-Type', /json/)
             .expect(200);
 
-        let { categoria } = response.body;
-        expect(categoria).toEqual(
+        let { cuenta } = response.body;
+        expect(cuenta).toEqual(
             expect.objectContaining({ estado: false }),
         )
     })
