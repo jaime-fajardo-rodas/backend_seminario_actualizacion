@@ -1,4 +1,4 @@
-const {Usuario, Gasto, Cuenta, Categoria} = require("../models");
+const {Usuario, Gasto, Ingreso, Cuenta, Categoria} = require("../models");
 
 //verificar si el correo existe
 const emailExiste = async (correo = "") => {
@@ -36,10 +36,18 @@ const existeCategoriaPorId = async (id) => {
   }
 };
 
+const existeIngresoPorId = async (id) => {
+  const existeIngreso = await Ingreso.findById(id);
+  if (!existeIngreso) {
+    throw new Error(`El ID: ${id} no se encuentra registrado en BD`);
+  }
+};
+
 module.exports = {
   emailExiste,
   existeUsuarioPorId,
   existeGastoPorId,
   existeCuentaPorId,
-  existeCategoriaPorId
+  existeCategoriaPorId,
+  existeIngresoPorId
 };
