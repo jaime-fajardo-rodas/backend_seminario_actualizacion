@@ -11,7 +11,6 @@ const {
   categoriasPut,
   categoriasPost,
   categoriasDelete,
-  categoriasGetByUser,
 } = require("../controllers/categorias");
 
 const router = Router();
@@ -27,13 +26,6 @@ router.get("/:id",[
   check('id').custom( existeCategoriaPorId ),
   validarCampos
 ], categoriasGetById );
-
-router.get("/categoriasGetByUser:id",[
-  validarJWT,
-  check('id', 'No es un ID válido').isMongoId(),
-  check('id').custom( existeCategoriaPorId ),
-  validarCampos
-], categoriasGetByUser );
 
 router.put("/:id",[
   validarJWT,

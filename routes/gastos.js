@@ -32,6 +32,15 @@ router.put("/:id",[
   validarJWT,
   check('id', 'No es un ID válido').isMongoId(),
   check('id').custom( existeGastoPorId ),
+
+  check('cuenta', 'cuenta es obligatorio').not().isEmpty(),
+  check('cuenta', 'No es un ID válido').isMongoId(),
+  check('cuenta').custom(existeCuentaPorId),
+
+  check('categoria', 'categoria es obligatorio').not().isEmpty(),
+  check('categoria', 'No es un ID válido').isMongoId(),
+  check('categoria').custom(existeCategoriaPorId),
+  
   validarCampos
 ], gastosPut);
 

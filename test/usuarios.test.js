@@ -88,6 +88,7 @@ describe('POST /usuarios/', () => {
                 [
                     expect.objectContaining(
                         { correo: 'admin1@gmail.com' },
+                        { correo: 'camilo_aristizabal@outlook.com' },
                         { correo: 'admin2@gmail.com' }
                     )
                 ]

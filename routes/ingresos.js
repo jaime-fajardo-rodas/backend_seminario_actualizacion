@@ -4,7 +4,7 @@ const helmet = require("helmet");
 
 const {validarCampos,validarJWT} = require('../middlewares');
 
-const { emailExiste, existeUsuarioPorId } = require("../helpers/db-validators");
+const { existeIngresoPorId, existeCuentaPorId, existeCategoriaPorId } = require("../helpers/db-validators");
 
 const {
    ingresosGet,
@@ -24,12 +24,22 @@ router.get("/",[
 router.get("/:id",[
   validarJWT,
   check('id', 'No es un ID válido').isMongoId(),
+  check('id').custom( existeIngresoPorId ),
   validarCampos
 ], ingresosGetById);
 
 router.put("/:id",[
   validarJWT,
   check('id', 'No es un ID válido').isMongoId(),
+
+  check('cuenta', 'cuenta es obligatorio').not().isEmpty(),
+  check('cuenta', 'No es un ID válido').isMongoId(),
+  check('cuenta').custom(existeCuentaPorId),
+
+  check('categoria', 'categoria es obligatorio').not().isEmpty(),
+  check('categoria', 'No es un ID válido').isMongoId(),
+  check('categoria').custom(existeCategoriaPorId),
+
   validarCampos
 ], ingresosPut);
 
@@ -38,8 +48,14 @@ router.post("/",[
   check('fecha', 'Fecha es obligatoria').not().isEmpty(),
   check('nombre', 'nombre es obligatorio').not().isEmpty(),
   check('valor', 'valor es obligatorio').not().isEmpty(),
+
   check('cuenta', 'cuenta es obligatorio').not().isEmpty(),
+  check('cuenta', 'No es un ID válido').isMongoId(),
+  check('cuenta').custom(existeCuentaPorId),
+
   check('categoria', 'categoria es obligatorio').not().isEmpty(),
+  check('categoria', 'No es un ID válido').isMongoId(),
+  check('categoria').custom(existeCategoriaPorId),
   validarCampos
 ] , ingresosPost);
 
