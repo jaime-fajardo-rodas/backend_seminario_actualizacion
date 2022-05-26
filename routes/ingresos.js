@@ -1,5 +1,6 @@
 const { Router, request } = require("express");
 const { check } = require("express-validator");
+const helmet = require("helmet");
 
 const {validarCampos,validarJWT} = require('../middlewares');
 
@@ -14,6 +15,7 @@ const {
 } = require("../controllers/ingresos");
 
 const router = Router();
+router.use(helmet.hidePoweredBy());
 
 router.get("/",[
   validarJWT,
